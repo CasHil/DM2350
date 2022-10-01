@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { checkUuid } from "../utils/uuid";
+import CurrentQuestionForm from "./CurrentQuestionForm";
 
 export default function CurrentQuestion() {
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -24,7 +25,8 @@ export default function CurrentQuestion() {
   }, []);
   return (
     <>
-      <div>{currentQuestion.question}</div>
+      <h2>{currentQuestion.question}</h2>
+      <CurrentQuestionForm></CurrentQuestionForm>
     </>
   );
 }
