@@ -1,67 +1,61 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../utils/supabaseClient'
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect } from "react";
+import { supabase } from "../utils/supabaseClient";
+import ExperimentFinished from "./ExperimentFinished";
+import { checkUuid, generateUuid, removeUuid } from "../utils/uuid";
+import { checkUser } from "../utils/user";
 
 export default function Auth() {
-  const [loading, setLoading] = useState(false)
-  const generateUuid = () => {
-    const uuid = uuidv4();
-    localStorage.setItem("uuid", uuid);
-    return uuid;
-  }
+  const [loading, setLoading] = useState(false);
+  const [userCompletedExperiment, setUserCompletedExperiment] = useState(false);
   async function insertUser() {
-    const insertions = {
-      created_at: new Date(),
-      person_id: generateUuid()
+    try {
+      const personId = generateUuid();
+
+      // Arrange user data to be inserted
+      const userInsertions = {
+        created_at: new Date(),
+        person_id: personId,
+      };
+
+      // Insert user data
+      await supabase
+        .from("users")
+        .insert([userInsertions], { returning: "minimal" });
+
+      // Arrange current question data
+      const currentUserQuestionInsertions = {
+        created_at: new Date(),
+        person_id: personId,
+        current_question: 1,
+        repetition: 1,
+      };
+
+      await supabase
+        .from("current_user_question")
+        .insert([currentUserQuestionInsertions], { returning: "minimal" });
+    } catch (err) {
+      console.error(err);
     }
-    const { error } = await supabase.from('users').insert([insertions], { returning: 'minimal' })
-    console.log(error)
-    if (error) alert(error)
   }
-  
+
   useEffect(() => {
     try {
-      setLoading(true)
-      console.log(loading)
-      if (typeof window !== 'undefined') {
-        if (!window.localStorage.getItem("uuid")) {
-          insertUser()
-        }
-        else {
-          async function checkUser() {
-            try {
-              const { data, error } = await supabase.from('users').select().eq('person_id', window.localStorage.getItem("uuid"))
-              console.log(data)
-              if (error) throw error
-              if (data.length === 0) {
-                window.localStorage.removeItem("uuid")
-                return false
-              }
-              return true
-            }
-            catch (err) {
-              console.error(err)
-            } 
-          }
+      setLoading(true);
+      if (typeof window !== "undefined") {
+        if (!checkUuid()) {
+          insertUser();
+        } else {
           if (!checkUser()) {
-            insertUser()
+            insertUser();
+          } else {
+            setUserCompletedExperiment(true);
           }
         }
-        
-          
       }
-      
-      
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
+  }, []);
 
-  return (
-    <div className="row flex-center flex">
-      <div className="col-6 form-widget">
-        <h1 className="header">Supabase + Next.js</h1>
-      </div>
-    </div>
-  )
+  // if (userCompletedExperiment) return <ExperimentFinished></ExperimentFinished>;
 }
