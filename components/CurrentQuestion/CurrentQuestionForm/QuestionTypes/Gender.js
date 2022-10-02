@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { supabase } from "../../../../utils/supabaseClient";
-import { checkUuid } from "../../../../utils/uuid";
+import { getUuid } from "../../../../utils/uuid";
 
 export default function Gender(props) {
   const [gender, setGender] = useState("male");
@@ -21,7 +21,7 @@ export default function Gender(props) {
     await supabase
       .from("user_information")
       .update({ gender: gender })
-      .match({ person_id: checkUuid() });
+      .match({ person_id: getUuid() });
 
     props.updateQuestion();
   }

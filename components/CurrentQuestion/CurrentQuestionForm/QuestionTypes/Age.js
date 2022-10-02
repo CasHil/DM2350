@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button } from "@mui/material";
 import { useState } from "react";
-import { checkUuid } from "../../../../utils/uuid";
+import { getUuid } from "../../../../utils/uuid";
 import { supabase } from "../../../../utils/supabaseClient";
 
 export default function Age(props) {
@@ -11,10 +11,10 @@ export default function Age(props) {
     // Arrange user data to be inserted
     const userInsertions = {
       created_at: new Date(),
-      person_id: checkUuid(),
+      person_id: getUuid(),
       age: age,
       gender: 0,
-      jazz_preference: 0,
+      hours_listened: 0,
     };
 
     await supabase

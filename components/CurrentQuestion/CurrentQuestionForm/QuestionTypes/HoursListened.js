@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
-import { checkUuid } from "../../../../utils/uuid";
+import { getUuid } from "../../../../utils/uuid";
 import { supabase } from "../../../../utils/supabaseClient";
 
 export default function HoursListened(props) {
@@ -10,7 +10,7 @@ export default function HoursListened(props) {
     await supabase
       .from("user_information")
       .update({ hours_listened: hoursListened })
-      .match({ person_id: checkUuid() });
+      .match({ person_id: getUuid() });
 
     props.updateQuestion();
   }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
-import { checkUuid, generateUuid } from "../utils/uuid";
+import { getUuid, generateUuid } from "../utils/uuid";
 import { checkUser } from "../utils/user";
 
 export default function Auth() {
@@ -22,16 +22,16 @@ export default function Auth() {
         .insert([userInsertions], { returning: "minimal" });
 
       // Arrange current question data
-      const currentUserQuestionInsertions = {
-        created_at: new Date(),
-        person_id: personId,
-        current_question: 1,
-        repetition: 1,
-      };
+      // const currentUserQuestionInsertions = {
+      //   created_at: new Date(),
+      //   person_id: personId,
+      //   current_question: 1,
+      //   repetition: 1,
+      // };
 
-      await supabase
-        .from("current_user_question")
-        .insert([currentUserQuestionInsertions], { returning: "minimal" });
+      // await supabase
+      //   .from("current_user_question")
+      //   .insert([currentUserQuestionInsertions], { returning: "minimal" });
     } catch (err) {
       console.error(err);
     }
@@ -41,7 +41,7 @@ export default function Auth() {
     try {
       setLoading(true);
       if (typeof window !== "undefined") {
-        if (!checkUuid()) {
+        if (!getUuid()) {
           insertUser();
         } else {
           if (!checkUser()) {

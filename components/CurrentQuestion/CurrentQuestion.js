@@ -24,8 +24,6 @@ export default function CurrentQuestion() {
           .select()
           .eq("question_number", currentQuestionNumber);
 
-        console.log(result);
-
         setCurrentQuestion(result.data[0]);
       } catch (err) {
         console.error(err);
