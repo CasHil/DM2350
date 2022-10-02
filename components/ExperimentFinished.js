@@ -11,6 +11,8 @@ export default function ExperimentFinished() {
       <Image
         alt="Humorous video of a dog doing science experiments"
         src="/200.gif"
+        width={267}
+        height={200}
       ></Image>
     </>
   );

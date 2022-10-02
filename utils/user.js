@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient";
-import { getUuid } from "./uuid";
+import { getUuid, removeUuid } from "./uuid";
 
 export async function checkUser() {
   try {

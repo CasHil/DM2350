@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   Radio,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { supabase } from "../../../../utils/supabaseClient";
 import { getUuid } from "../../../../utils/uuid";
@@ -71,6 +72,7 @@ export default function Preference(props) {
       {!loading && (
         <ReactAudioPlayer src={selectedRandomSampleFilename} controls />
       )}
+      {loading && <CircularProgress />}
       <br />
       <FormLabel id="demo-radio-buttons-group-label">Preference</FormLabel>
       <RadioGroup

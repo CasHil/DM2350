@@ -10,5 +10,9 @@ export default function CurrentQuestionForm(props) {
       props.repetition
     );
   }
-  return <FormControl>{questionAnswers()}</FormControl>;
+  return (
+    <FormControl style={{ margin: "auto", minWidth: "33%" }}>
+      {questionAnswers()}
+    </FormControl>
+  );
 }
