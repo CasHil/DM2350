@@ -12,6 +12,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import ReactAudioPlayer from "react-audio-player";
 import audioFiles from "../../../../utils/audioFiles.json";
+import { useCallback } from "react";
 
 export default function Preference(props) {
   const [preference, setPreference] = useState(1);
@@ -51,7 +52,7 @@ export default function Preference(props) {
     setLoading(false);
   }
 
-  function getSample() {
+  const getSample = useCallback(() => {
     const keys = Object.keys(fileNames);
     // Select random file
     const randomNumber = (keys.length * Math.random()) << 0;
@@ -63,7 +64,7 @@ export default function Preference(props) {
     setSelectedRandomSample(randomNumber);
     setSelectedRandomSampleFilename(audioFiles[randomNumber]);
     return audioFiles[keys[randomNumber]];
-  }
+  }, [fileNames]);
 
   return (
     <>
