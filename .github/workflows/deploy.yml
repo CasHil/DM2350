@@ -25,6 +25,8 @@ jobs:
           npm i --legacy-peer-deps
           npm run build
           npm run export
+          touch ./out/.nojekyll
+          echo $GITHUB_CONTEXT
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
