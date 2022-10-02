@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import styles from "../styles/Home.module.css";
 import Auth from "../components/Auth";
-import CurrentQuestion from "../components/CurrentQuestion";
+import CurrentQuestion from "../components/CurrentQuestion/CurrentQuestion";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Divider } from "@mui/material";
@@ -30,7 +30,9 @@ export default function Home() {
           Thank you for participating in our study about perceptual preferences
           in jazz. Our goal in this research is to find out the preferences of
           listeners, varying specific aspects of the song that you will be
-          listening to.
+          listening to. First you will be asked for some statistics about
+          yourself. After that, you will listen to 25 samples with some changes
+          applied.
         </p>
         <Divider />
         <Auth />
