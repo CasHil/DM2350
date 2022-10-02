@@ -63,7 +63,11 @@ export default function Preference(props) {
       return copy;
     });
     setSelectedRandomSample(randomNumber);
-    setSelectedRandomSampleFilename(audioFiles[randomNumber]);
+    setSelectedRandomSampleFilename(
+      process.env.NODE_ENV === "production"
+        ? `/DM2350${audioFiles[randomNumber]}`
+        : audioFiles[randomNumber]
+    );
     return audioFiles[keys[randomNumber]];
   }, [fileNames]);
 

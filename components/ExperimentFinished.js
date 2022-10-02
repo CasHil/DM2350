@@ -10,7 +10,9 @@ export default function ExperimentFinished() {
       <br></br>
       <Image
         alt="Humorous video of a dog doing science experiments"
-        src="/200.gif"
+        src={
+          process.env.NODE_ENV === "production" ? `/DM2350/200.gif` : "/200.gif"
+        }
         width={267}
         height={200}
       ></Image>
