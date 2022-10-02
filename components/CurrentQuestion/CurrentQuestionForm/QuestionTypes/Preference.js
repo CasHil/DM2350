@@ -30,7 +30,7 @@ export default function Preference(props) {
     setLoading(true);
     getSample();
     setLoading(false);
-  }, []);
+  }, [getSample]);
 
   async function handleClick() {
     setLoading(true);

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../utils/supabaseClient";
 import styles from "../styles/Home.module.css";
 import Auth from "../components/Auth";
 import CurrentQuestion from "../components/CurrentQuestion/CurrentQuestion";
@@ -14,13 +13,6 @@ const darkTheme = createTheme({
 });
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    let mounted = true;
-  }, []);
-
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
