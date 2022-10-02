@@ -2,7 +2,6 @@ import Gender from "../components/CurrentQuestion/CurrentQuestionForm/QuestionTy
 import Preference from "../components/CurrentQuestion/CurrentQuestionForm/QuestionTypes/Preference";
 import Age from "../components/CurrentQuestion/CurrentQuestionForm/QuestionTypes/Age";
 import HoursListened from "../components/CurrentQuestion/CurrentQuestionForm/QuestionTypes/HoursListened";
-// export const questionOrder = ["age", "gender", "hoursListened", "preference"];
 
 export function questionOrder(questionNumber, updateQuestion, repetition) {
   return [

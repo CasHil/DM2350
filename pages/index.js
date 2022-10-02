@@ -31,8 +31,10 @@ export default function Home() {
           in jazz. Our goal in this research is to find out the preferences of
           listeners, varying specific aspects of the song that you will be
           listening to. First you will be asked for some statistics about
-          yourself. After that, you will listen to 25 samples with some changes
-          applied.
+          yourself. After that, you will listen to 25 samples, which you will
+          have to rate on a scale from 1 to 5. All your data is completely
+          anonymous and will be stored only for the duration of the course,
+          after which it will be discarded.
         </p>
         <Divider />
         <Auth />

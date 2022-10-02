@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
-import ExperimentFinished from "./ExperimentFinished";
-import { checkUuid, generateUuid, removeUuid } from "../utils/uuid";
+import { checkUuid, generateUuid } from "../utils/uuid";
 import { checkUser } from "../utils/user";
 
 export default function Auth() {
