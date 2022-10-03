@@ -5,7 +5,7 @@ import { getUuid } from "../../../../utils/uuid";
 import { supabase } from "../../../../utils/supabaseClient";
 
 export default function Age(props) {
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState(null);
 
   async function handleClick() {
     // Arrange user data to be inserted
@@ -31,13 +31,14 @@ export default function Age(props) {
   return (
     <>
       <TextField
+        required
         id="age"
         label="Age"
         variant="outlined"
         onChange={handleChange}
         style={{ marginBottom: "1rem" }}
       />
-      <Button onClick={handleClick} variant="contained">
+      <Button onClick={handleClick} variant="contained" disabled={age === null}>
         Next
       </Button>
     </>

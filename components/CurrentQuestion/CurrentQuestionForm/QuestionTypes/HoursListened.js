@@ -4,7 +4,7 @@ import { getUuid } from "../../../../utils/uuid";
 import { supabase } from "../../../../utils/supabaseClient";
 
 export default function HoursListened(props) {
-  const [hoursListened, setHoursListened] = useState(0);
+  const [hoursListened, setHoursListened] = useState(null);
 
   async function handleClick() {
     await supabase
@@ -22,13 +22,18 @@ export default function HoursListened(props) {
   return (
     <>
       <TextField
+        required
         id="hours_listened"
         label="Hours"
         variant="outlined"
         onChange={handleChange}
         style={{ marginBottom: "1rem" }}
       />
-      <Button onClick={handleClick} variant="contained">
+      <Button
+        onClick={handleClick}
+        variant="contained"
+        disabled={hoursListened === null}
+      >
         Next
       </Button>
     </>

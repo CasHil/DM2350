@@ -16,12 +16,14 @@ import audioFiles from "../../../../utils/audioFiles.json";
 import { useCallback } from "react";
 
 export default function Preference(props) {
-  const [preference, setPreference] = useState(1);
+  const [preference, setPreference] = useState(null);
   const [selectedRandomSample, setSelectedRandomSample] = useState();
   const [selectedRandomSampleFilename, setSelectedRandomSampleFilename] =
     useState("");
   const [progress, setProgress] = useState(0);
-  const [fileNames, setFileNames] = useState(audioFiles);
+  const [fileNameKeys, setFileNameKeys] = useState(
+    Object.getOwnPropertyNames(audioFiles)
+  );
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
@@ -49,28 +51,28 @@ export default function Preference(props) {
 
     props.updateQuestion();
     setProgress(progress + 1);
+    setPreference(null);
     getSample();
     setLoading(false);
   }
 
   const getSample = useCallback(() => {
-    const keys = Object.keys(fileNames);
     // Select random file
-    const randomNumber = (keys.length * Math.random()) << 0;
-    setFileNames((current) => {
-      const copy = { ...current };
-      delete current[randomNumber];
-      return copy;
+    const randomNumber = (fileNameKeys.length * Math.random()) << 0;
+    setFileNameKeys((current) => {
+      const copy = [...current];
+      return copy.filter((fileNameKey) => fileNameKey != randomNumber);
     });
-    console.log(fileNames);
     setSelectedRandomSample(randomNumber);
     setSelectedRandomSampleFilename(
       process.env.NODE_ENV === "production"
         ? `/DM2350${audioFiles[randomNumber]}`
         : audioFiles[randomNumber]
     );
-    return audioFiles[keys[randomNumber]];
-  }, [fileNames]);
+    console.log(`Random number: ${randomNumber}`);
+    console.log(`Random file: ${audioFiles[randomNumber]}`);
+    return audioFiles[randomNumber];
+  }, []);
 
   return (
     <>
@@ -88,13 +90,14 @@ export default function Preference(props) {
         name="radio-buttons-group"
         onChange={handleChange}
         style={{ marginBottom: "1rem" }}
+        value={preference}
       >
         {Array.from(Array(5).keys()).map((x) => {
           return (
             <FormControlLabel
               key={x + 1}
               value={x + 1}
-              control={<Radio />}
+              control={<Radio required />}
               label={x + 1}
             />
           );
@@ -104,6 +107,7 @@ export default function Preference(props) {
         onClick={handleClick}
         variant="contained"
         style={{ marginBottom: "1rem" }}
+        disabled={preference === null}
       >
         Next
       </Button>

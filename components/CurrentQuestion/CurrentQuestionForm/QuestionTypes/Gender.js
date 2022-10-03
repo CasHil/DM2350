@@ -11,7 +11,7 @@ import { supabase } from "../../../../utils/supabaseClient";
 import { getUuid } from "../../../../utils/uuid";
 
 export default function Gender(props) {
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState(null);
 
   function handleChange(e) {
     setGender(e.target.value);
@@ -31,7 +31,6 @@ export default function Gender(props) {
       <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="male"
         name="radio-buttons-group"
         onChange={handleChange}
         style={{ marginBottom: "1rem" }}
@@ -41,13 +40,17 @@ export default function Gender(props) {
             <FormControlLabel
               key={key}
               value={key}
-              control={<Radio />}
+              control={<Radio required />}
               label={value}
             />
           );
         })}
       </RadioGroup>
-      <Button onClick={handleClick} variant="contained">
+      <Button
+        onClick={handleClick}
+        variant="contained"
+        disabled={gender === null}
+      >
         Next
       </Button>
     </>
