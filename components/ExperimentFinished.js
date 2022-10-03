@@ -4,10 +4,9 @@ import Image from "next/image";
 export default function ExperimentFinished() {
   return (
     <>
-      <h2>
+      <h2 style={{ marginBottom: "20px" }}>
         Thanks for participating in the experiment! Enjoy the rest of your day!{" "}
       </h2>
-      <br></br>
       <Image
         alt="Humorous video of a dog doing science experiments"
         src={

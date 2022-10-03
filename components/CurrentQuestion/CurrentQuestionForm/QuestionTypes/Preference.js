@@ -62,6 +62,7 @@ export default function Preference(props) {
       delete current[randomNumber];
       return copy;
     });
+    console.log(fileNames);
     setSelectedRandomSample(randomNumber);
     setSelectedRandomSampleFilename(
       process.env.NODE_ENV === "production"
@@ -74,15 +75,19 @@ export default function Preference(props) {
   return (
     <>
       {!loading && (
-        <ReactAudioPlayer src={selectedRandomSampleFilename} controls />
+        <ReactAudioPlayer
+          src={selectedRandomSampleFilename}
+          controls
+          style={{ marginBottom: "1rem" }}
+        />
       )}
       {loading && <CircularProgress />}
-      <br />
       <FormLabel id="demo-radio-buttons-group-label">Preference</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
         onChange={handleChange}
+        style={{ marginBottom: "1rem" }}
       >
         {Array.from(Array(5).keys()).map((x) => {
           return (
@@ -95,11 +100,13 @@ export default function Preference(props) {
           );
         })}
       </RadioGroup>
-      <br />
-      <Button onClick={handleClick} variant="contained">
+      <Button
+        onClick={handleClick}
+        variant="contained"
+        style={{ marginBottom: "1rem" }}
+      >
         Next
       </Button>
-      <br />
       <LinearProgress
         variant="determinate"
         value={(progress / 25) * 100}

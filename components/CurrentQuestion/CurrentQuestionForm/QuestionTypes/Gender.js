@@ -34,6 +34,7 @@ export default function Gender(props) {
         defaultValue="male"
         name="radio-buttons-group"
         onChange={handleChange}
+        style={{ marginBottom: "1rem" }}
       >
         {Object.entries(genders).map(([key, value]) => {
           return (
@@ -46,7 +47,6 @@ export default function Gender(props) {
           );
         })}
       </RadioGroup>
-      <br />
       <Button onClick={handleClick} variant="contained">
         Next
       </Button>

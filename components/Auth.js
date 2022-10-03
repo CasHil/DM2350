@@ -43,12 +43,11 @@ export default function Auth() {
       if (typeof window !== "undefined") {
         if (!getUuid()) {
           insertUser();
-        } else {
-          if (!checkUser()) {
-            insertUser();
-          } else {
-            setUserCompletedExperiment(true);
-          }
+          return;
+        }
+        if (!checkUser()) {
+          insertUser();
+          return;
         }
       }
     } finally {

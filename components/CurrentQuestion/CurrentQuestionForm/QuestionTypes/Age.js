@@ -35,8 +35,8 @@ export default function Age(props) {
         label="Age"
         variant="outlined"
         onChange={handleChange}
+        style={{ marginBottom: "1rem" }}
       />
-      <br></br>
       <Button onClick={handleClick} variant="contained">
         Next
       </Button>

@@ -26,8 +26,8 @@ export default function HoursListened(props) {
         label="Hours"
         variant="outlined"
         onChange={handleChange}
+        style={{ marginBottom: "1rem" }}
       />
-      <br />
       <Button onClick={handleClick} variant="contained">
         Next
       </Button>
