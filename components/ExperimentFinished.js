@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function ExperimentFinished() {
   return (
     <>
-      <h2 style={{ marginBottom: "20px" }}>
+      <h2 style={{ marginBottom: "1rem" }}>
         Thanks for participating in the experiment! Enjoy the rest of your day!{" "}
       </h2>
       <Image

@@ -41,11 +41,12 @@ export default function Auth() {
     try {
       setLoading(true);
       if (typeof window !== "undefined") {
-        if (!getUuid()) {
+        const uuid = getUuid()
+        if (!uuid) {
           insertUser();
           return;
         }
-        if (!checkUser()) {
+        if (!checkUser(uuid)) {
           insertUser();
           return;
         }
