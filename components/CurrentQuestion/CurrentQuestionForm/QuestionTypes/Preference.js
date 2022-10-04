@@ -13,6 +13,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import ReactAudioPlayer from "react-audio-player";
 import audioFiles from "../../../../utils/audioFiles.json";
+import { preferences } from "../../../../utils/preferenceForm";
 import { useCallback } from "react";
 
 export default function Preference(props) {
@@ -92,13 +93,13 @@ export default function Preference(props) {
         style={{ marginBottom: "1rem" }}
         value={preference}
       >
-        {Array.from(Array(5).keys()).map((x) => {
+        {Object.entries(preferences).map(([key, value]) => {
           return (
             <FormControlLabel
-              key={x + 1}
-              value={x + 1}
+              key={key}
+              value={key}
               control={<Radio required />}
-              label={x + 1}
+              label={value}
             />
           );
         })}
