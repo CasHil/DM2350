@@ -78,7 +78,9 @@ export default function Preference(props) {
     const sampleNumber = remainingQuestions[randomNumber];
     const isProd = process.env.NODE_ENV === "production";
     setSelectedRandomSample(sampleNumber);
-    setSelectedRandomSampleFilename(audioFiles[sampleNumber]);
+    setSelectedRandomSampleFilename(
+      `${isProd ? "DM2350" : ""}${audioFiles[sampleNumber]}`
+    );
     return audioFiles[sampleNumber];
   }, []);
 
