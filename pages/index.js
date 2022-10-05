@@ -6,7 +6,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Divider } from "@mui/material";
 import Head from "next/head";
-
+import { Suspense } from "react";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",

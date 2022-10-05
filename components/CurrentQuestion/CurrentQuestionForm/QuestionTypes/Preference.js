@@ -15,6 +15,12 @@ import ReactAudioPlayer from "react-audio-player";
 import audioFiles from "../../../../utils/audioFiles.json";
 import { preferences } from "../../../../utils/preferenceForm";
 import { useCallback } from "react";
+import {
+  generateRemainingQuestions,
+  getRemainingQuestions,
+  removeRemainingQuestion,
+  setRemainingQuestions,
+} from "../../../../utils/remainingQuestions";
 
 export default function Preference(props) {
   const [preference, setPreference] = useState(null);
@@ -22,9 +28,6 @@ export default function Preference(props) {
   const [selectedRandomSampleFilename, setSelectedRandomSampleFilename] =
     useState("");
   const [progress, setProgress] = useState(0);
-  const [fileNameKeys, setFileNameKeys] = useState(
-    Object.getOwnPropertyNames(audioFiles)
-  );
   const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
@@ -33,9 +36,15 @@ export default function Preference(props) {
 
   useEffect(() => {
     setLoading(true);
+    console.log(loading);
+    if (!getRemainingQuestions()) {
+      generateRemainingQuestions();
+    }
+    const remainingQuestions = getRemainingQuestions();
+    setProgress(25 - remainingQuestions.length);
     getSample();
     setLoading(false);
-  }, [getSample]);
+  }, []);
 
   async function handleClick() {
     setLoading(true);
@@ -50,41 +59,42 @@ export default function Preference(props) {
       .from("answers")
       .insert([userInsertions], { returning: "minimal" });
 
-    props.updateQuestion();
     setProgress(progress + 1);
+    removeRemainingQuestion(selectedRandomSample);
     setPreference(null);
-    getSample();
+
+    const remainingQuestions = getRemainingQuestions();
+    if (remainingQuestions && remainingQuestions.length > 0) {
+      getSample();
+    }
+    props.updateQuestion();
     setLoading(false);
   }
 
   const getSample = useCallback(() => {
     // Select random file
-    const randomNumber = (fileNameKeys.length * Math.random()) << 0;
-    setFileNameKeys((current) => {
-      const copy = [...current];
-      return copy.filter((fileNameKey) => fileNameKey != randomNumber);
-    });
-    setSelectedRandomSample(randomNumber);
+    const remainingQuestions = getRemainingQuestions();
+    const randomNumber = (remainingQuestions.length * Math.random()) << 0;
+    const sampleNumber = remainingQuestions[randomNumber];
+    const isProd = process.env.NODE_ENV === "production";
+    setSelectedRandomSample(sampleNumber);
     setSelectedRandomSampleFilename(
-      process.env.NODE_ENV === "production"
-        ? `/DM2350${audioFiles[randomNumber]}`
-        : audioFiles[randomNumber]
+      `${isProd ? "DM2350" : ""}${audioFiles[sampleNumber]}`
     );
-    console.log(`Random number: ${randomNumber}`);
-    console.log(`Random file: ${audioFiles[randomNumber]}`);
-    return audioFiles[randomNumber];
+    return audioFiles[sampleNumber];
   }, []);
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <ReactAudioPlayer
           src={selectedRandomSampleFilename}
           controls
           style={{ marginBottom: "1rem" }}
         />
+      ) : (
+        <CircularProgress />
       )}
-      {loading && <CircularProgress />}
       <FormLabel id="demo-radio-buttons-group-label">Preference</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"

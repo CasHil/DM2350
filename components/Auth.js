@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { getUuid, generateUuid } from "../utils/uuid";
-import { checkUser } from "../utils/user";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -41,12 +40,8 @@ export default function Auth() {
     try {
       setLoading(true);
       if (typeof window !== "undefined") {
-        const uuid = getUuid()
+        const uuid = getUuid();
         if (!uuid) {
-          insertUser();
-          return;
-        }
-        if (!checkUser(uuid)) {
           insertUser();
           return;
         }
