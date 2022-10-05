@@ -1,9 +1,11 @@
 import React from "react";
 import { grooviness } from "../../../../../utils/groovinessForm";
+import { FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 
 export default function Grooviness(props) {
   return (
     <>
+      <h2>{props.question.question}</h2>
       <FormLabel id="demo-radio-buttons-group-label">Grooviness</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
@@ -15,7 +17,7 @@ export default function Grooviness(props) {
         {Object.entries(grooviness).map(([key, value]) => {
           return (
             <FormControlLabel
-              key={key}
+              key={`grooviness-${key}`}
               value={key}
               control={<Radio required />}
               label={value}

@@ -1,9 +1,12 @@
 import React from "react";
 import { preferences } from "../../../../../utils/preferenceForm";
+import { FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 
 export default function Enjoyment(props) {
+  console.log(props);
   return (
     <>
+      <h2>{props.question.question}</h2>
       <FormLabel id="demo-radio-buttons-group-label">Preference</FormLabel>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
@@ -15,7 +18,7 @@ export default function Enjoyment(props) {
         {Object.entries(preferences).map(([key, value]) => {
           return (
             <FormControlLabel
-              key={key}
+              key={`preference-${key}`}
               value={key}
               control={<Radio required />}
               label={value}

@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Button,
-  CircularProgress,
-} from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { supabase } from "../../../../../utils/supabaseClient";
 import { getUuid } from "../../../../../utils/uuid";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -20,8 +13,9 @@ import {
   removeRemainingQuestion,
 } from "../../../../../utils/remainingQuestions";
 import Grooviness from "./Grooviness";
+import Enjoyment from "./Enjoyment";
 
-export default function Enjoyment(props) {
+export default function Preferences(props) {
   const [enjoyment, setEnjoyment] = useState(null);
   const [grooviness, setGrooviness] = useState(null);
   const [selectedRandomSample, setSelectedRandomSample] = useState();
@@ -40,7 +34,6 @@ export default function Enjoyment(props) {
 
   useEffect(() => {
     setLoading(true);
-    console.log(loading);
     if (!getRemainingQuestions()) {
       generateRemainingQuestions();
     }
@@ -80,7 +73,15 @@ export default function Enjoyment(props) {
   const getSample = useCallback(() => {
     // Select random file
     const remainingQuestions = getRemainingQuestions();
-    const randomNumber = (remainingQuestions.length * Math.random()) << 0;
+    const firstExperimentQuestions = Array.from(Array(15)).map((x) => x + 1);
+    const firstExperiment = remainingQuestions.filter((q) =>
+      firstExperimentQuestions.includes(q)
+    );
+
+    const randomNumber =
+      firstExperiment > 0
+        ? (firstExperiment.length * Math.random()) << 0
+        : (remainingQuestions.length * Math.random()) << 0;
     const sampleNumber = remainingQuestions[randomNumber];
     setSelectedRandomSample(sampleNumber);
     setSelectedRandomSampleFilename(audioFiles[sampleNumber]);
@@ -90,24 +91,34 @@ export default function Enjoyment(props) {
   return (
     <>
       {!loading ? (
-        <ReactAudioPlayer
-          src={selectedRandomSampleFilename}
-          controls
-          style={{ marginBottom: "1rem" }}
-        />
+        <>
+          <ReactAudioPlayer
+            src={selectedRandomSampleFilename}
+            controls
+            style={{ marginTop: "1rem" }}
+          />
+
+          <Enjoyment
+            handleChange={handleChangeEnjoyment}
+            question={props.currentQuestion[0]}
+          />
+          <Grooviness
+            handleChange={handleChangeGrooviness}
+            question={props.currentQuestion[1]}
+          />
+          <Button
+            onClick={handleClick}
+            variant="contained"
+            style={{ marginBottom: "1rem" }}
+            disabled={enjoyment === null || grooviness === null}
+          >
+            Next
+          </Button>
+        </>
       ) : (
         <CircularProgress />
       )}
-      <Enjoyment onChange={handleChangeEnjoyment} />
-      <Grooviness onChange={handleChangeGrooviness} />
-      <Button
-        onClick={handleClick}
-        variant="contained"
-        style={{ marginBottom: "1rem" }}
-        disabled={enjoyment === null && grooviness === null}
-      >
-        Next
-      </Button>
+
       <LinearProgress
         variant="determinate"
         value={(progress / 25) * 100}
