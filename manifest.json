@@ -1,0 +1,9 @@
+{
+  "short_name": "DM2350 Experiment",
+  "name": "Experiment for DM2350 at the Royal Institute of Technology in Stockholm",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
