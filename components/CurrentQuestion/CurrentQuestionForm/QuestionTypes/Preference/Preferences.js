@@ -7,31 +7,35 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { supabase } from "../../../../utils/supabaseClient";
-import { getUuid } from "../../../../utils/uuid";
+import { supabase } from "../../../../../utils/supabaseClient";
+import { getUuid } from "../../../../../utils/uuid";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import ReactAudioPlayer from "react-audio-player";
-import audioFiles from "../../../../utils/audioFiles.json";
-import { preferences } from "../../../../utils/preferenceForm";
+import audioFiles from "../../../../../utils/audioFiles.json";
 import { useCallback } from "react";
 import {
   generateRemainingQuestions,
   getRemainingQuestions,
   removeRemainingQuestion,
-  setRemainingQuestions,
-} from "../../../../utils/remainingQuestions";
+} from "../../../../../utils/remainingQuestions";
+import Grooviness from "./Grooviness";
 
-export default function Preference(props) {
-  const [preference, setPreference] = useState(null);
+export default function Enjoyment(props) {
+  const [enjoyment, setEnjoyment] = useState(null);
+  const [grooviness, setGrooviness] = useState(null);
   const [selectedRandomSample, setSelectedRandomSample] = useState();
   const [selectedRandomSampleFilename, setSelectedRandomSampleFilename] =
     useState("");
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  function handleChange(e) {
-    setPreference(e.target.value);
+  function handleChangeEnjoyment(e) {
+    setEnjoyment(e.target.value);
+  }
+
+  function handleChangeGrooviness(e) {
+    setGrooviness(e.target.value);
   }
 
   useEffect(() => {
@@ -51,7 +55,8 @@ export default function Preference(props) {
     const userInsertions = {
       created_at: new Date(),
       person_id: getUuid(),
-      answer: preference,
+      answer_preference: enjoyment,
+      answer_grooviness: grooviness,
       question_number: selectedRandomSample,
     };
 
@@ -61,7 +66,8 @@ export default function Preference(props) {
 
     setProgress(progress + 1);
     removeRemainingQuestion(selectedRandomSample);
-    setPreference(null);
+    setEnjoyment(null);
+    setGrooviness(null);
 
     const remainingQuestions = getRemainingQuestions();
     if (remainingQuestions && remainingQuestions.length > 0) {
@@ -92,30 +98,13 @@ export default function Preference(props) {
       ) : (
         <CircularProgress />
       )}
-      <FormLabel id="demo-radio-buttons-group-label">Preference</FormLabel>
-      <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        name="radio-buttons-group"
-        onChange={handleChange}
-        style={{ marginBottom: "1rem" }}
-        value={preference}
-      >
-        {Object.entries(preferences).map(([key, value]) => {
-          return (
-            <FormControlLabel
-              key={key}
-              value={key}
-              control={<Radio required />}
-              label={value}
-            />
-          );
-        })}
-      </RadioGroup>
+      <Enjoyment onChange={handleChangeEnjoyment} />
+      <Grooviness onChange={handleChangeGrooviness} />
       <Button
         onClick={handleClick}
         variant="contained"
         style={{ marginBottom: "1rem" }}
-        disabled={preference === null}
+        disabled={enjoyment === null && grooviness === null}
       >
         Next
       </Button>

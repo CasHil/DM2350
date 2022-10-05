@@ -24,11 +24,24 @@ export default function CurrentQuestion() {
   useEffect(() => {
     async function getCurrentQuestion() {
       try {
-        const result = await supabase
-          .from("questions")
-          .select()
-          .eq("question_number", currentQuestionNumber);
-
+        if (currentQuestionNumber < 5) {
+          const result = await supabase
+            .from("questions")
+            .select()
+            .eq("question_number", currentQuestionNumber);
+          setCurrentQuestion(result.data[0]);
+        } else {
+          const result = await supabase
+            .from("questions")
+            .select()
+            .or(
+              `question_number.eq${currentQuestionNumber},question_number.eq${
+                currentQuestionNumber + 1
+              }`
+            );
+          setCurrentQuestion(result.data);
+          console.log(currentQuestion);
+        }
         setCurrentQuestion(result.data[0]);
       } catch (err) {
         console.error(err);
@@ -47,7 +60,7 @@ export default function CurrentQuestion() {
   }, []);
   return (
     <>
-      {currentQuestionNumber > 4 ? (
+      {currentQuestionNumber > 6 ? (
         <ExperimentFinished />
       ) : (
         <>
