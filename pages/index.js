@@ -40,9 +40,11 @@ export default function Home() {
             will listen to 25 samples, which you will have to rate on a scale
             from 1 to 5, where 1 means liking it the least and 5 means liking it
             the most. Similarly, you will be asked how groovy you find the
-            sample. All of the samples are adapted from one piece of jazz. Note:
-            All your data is completely anonymous and will be stored only for
-            the duration of the course, after which it will be discarded.
+            sample. All of the samples are adapted from one piece of jazz. Make
+            sure that you listen to the samples with headphones in and in a
+            quiet environment. <br /> Note: All your data is completely
+            anonymous and will be stored only for the duration of the course,
+            after which it will be discarded.
           </p>
           <Divider />
           <Auth />
