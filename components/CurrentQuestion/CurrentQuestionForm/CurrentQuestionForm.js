@@ -4,7 +4,6 @@ import { questionOrder } from "../../../utils/questionOrder";
 
 export default function CurrentQuestionForm(props) {
   function questionAnswers() {
-    console.log(props);
     return questionOrder(
       props.questionNumber - 1,
       props.updateQuestion,

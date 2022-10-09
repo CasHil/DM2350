@@ -52,7 +52,7 @@ export default function CurrentQuestion() {
   async function getCurrentQuestion() {
     try {
       setLoading(true);
-      if (getCurrentQuestionNumberStorage() < 5) {
+      if (getCurrentQuestionNumberStorage() < 6) {
         const result = await supabase
           .from("questions")
           .select()
@@ -82,7 +82,7 @@ export default function CurrentQuestion() {
     } else {
       setCurrentQuestionNumber(getCurrentQuestionNumberStorage());
     }
-    if (currentQuestionNumber > 5) return;
+    if (currentQuestionNumber > 6) return;
   }, []);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function CurrentQuestion() {
   if (loading) {
     return <CircularProgress />;
   }
-  if (currentQuestionNumber > 5) {
+  if (currentQuestionNumber > 6) {
     return <ExperimentFinished />;
   }
 

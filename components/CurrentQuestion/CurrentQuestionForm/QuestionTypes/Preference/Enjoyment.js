@@ -3,7 +3,6 @@ import { preferences } from "../../../../../utils/preferenceForm";
 import { FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 
 export default function Enjoyment(props) {
-  console.log(props);
   return (
     <>
       <h2>{props.question.question}</h2>
