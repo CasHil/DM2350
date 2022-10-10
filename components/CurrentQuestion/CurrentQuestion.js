@@ -7,6 +7,7 @@ import {
 import { supabase } from "../../utils/supabaseClient";
 import ExperimentFinished from "../ExperimentFinished";
 import CurrentQuestionForm from "./CurrentQuestionForm/CurrentQuestionForm";
+import Intro from "../Intro";
 
 export default function CurrentQuestion() {
   const [currentQuestion, setCurrentQuestion] = useState({});
@@ -96,5 +97,10 @@ export default function CurrentQuestion() {
     return <ExperimentFinished />;
   }
 
-  return formatQuestion(currentQuestion);
+  return (
+    <>
+      {currentQuestionNumber == 1 && <Intro />}
+      {formatQuestion(currentQuestion)}
+    </>
+  );
 }
